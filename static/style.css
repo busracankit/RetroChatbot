@@ -1,0 +1,673 @@
+/* RetroBot 95 - 1990'lar tarzi web sitesi */
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000080;
+  background-image:
+    repeating-linear-gradient(45deg, #000080 0, #000080 20px, #0000a0 20px, #0000a0 40px);
+  font-family: "Comic Sans MS", "Times New Roman", cursive, serif;
+  color: #ffffff;
+  transition: background-color 0.4s ease;
+}
+
+/* --- Zaman makinesi / mod degistirme cubugu (her iki temada da gorunur) --- */
+
+.mode-toggle-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: #111111;
+  border-bottom: 3px solid #ffff00;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.mode-toggle-label {
+  color: #ffffff;
+  font-size: 13px;
+}
+
+.modernize-btn {
+  cursor: pointer;
+  border: 2px outset #808080;
+  padding: 6px 14px;
+  font-weight: bold;
+  font-size: 13px;
+  background: linear-gradient(#ffff66, #ffcc00);
+  color: #330033;
+  border-radius: 4px;
+}
+
+.modernize-btn:active {
+  border: 2px inset #808080;
+}
+
+.top-marquee {
+  background: #ff00ff;
+  color: #ffff00;
+  font-weight: bold;
+  padding: 4px 0;
+  border-bottom: 3px double #ffff00;
+}
+
+.page-frame {
+  width: 800px;
+  margin: 16px auto;
+  background: #c0c0c0;
+  border: 4px outset #ffffff;
+}
+
+.header-cell {
+  text-align: center;
+  background: linear-gradient(#ff00ff, #800080);
+  padding: 14px;
+  border-bottom: 4px ridge #ffff00;
+}
+
+.blink-title {
+  color: #ffff00;
+  text-shadow: 2px 2px #ff0000;
+  font-size: 32px;
+  margin: 4px 0;
+  animation: blink 1s step-start infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.subtitle {
+  color: #00ffff;
+  font-style: italic;
+  margin: 4px 0;
+}
+
+.under-construction {
+  display: inline-block;
+  margin-top: 8px;
+  background: #ffff00;
+  color: #ff0000;
+  border: 3px dashed #ff0000;
+  padding: 4px 10px;
+  font-weight: bold;
+  animation: blink 0.8s step-start infinite;
+}
+
+.body-cell {
+  background: #c0c0c0;
+  padding: 10px;
+}
+
+.layout-table {
+  width: 100%;
+  border-color: #808080;
+  background: #ffffff;
+}
+
+.sidebar {
+  width: 200px;
+  background: #dedede;
+  border-right: 3px ridge #808080;
+}
+
+.sidebar-box h3 {
+  color: #800080;
+  border-bottom: 2px solid #800080;
+}
+
+.sidebar-box ul {
+  list-style: square;
+  padding-left: 20px;
+}
+
+.sidebar-box a {
+  color: #0000ee;
+}
+
+.sidebar-box a:visited {
+  color: #551a8b;
+}
+
+.nav-icon {
+  margin-right: 6px;
+}
+
+.webring, .visitor-counter {
+  font-size: 12px;
+  color: #333333;
+  text-align: center;
+}
+
+#counter {
+  background: #000000;
+  color: #00ff00;
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+  padding: 2px 6px;
+  letter-spacing: 3px;
+  border: 2px inset #808080;
+}
+
+.main-content {
+  background: #ffffff;
+}
+
+.chat-window {
+  border: 3px inset #808080;
+  background: #f0f0f0;
+}
+
+.chat-header {
+  background: linear-gradient(#0000ff, #000080);
+  color: #ffffff;
+  padding: 6px 10px;
+  font-weight: bold;
+  border-bottom: 2px solid #000000;
+}
+
+.chat-avatar {
+  margin-right: 4px;
+}
+
+.chat-log {
+  height: 340px;
+  overflow-y: auto;
+  padding: 10px;
+  background: #ffffff;
+  color: #000000;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+}
+
+.msg {
+  margin-bottom: 10px;
+  padding: 6px 8px;
+  border: 1px solid #cccccc;
+}
+
+.bot-msg {
+  background: #e6f0ff;
+  border-left: 4px solid #0000ff;
+}
+
+.user-msg {
+  background: #fff7cc;
+  border-left: 4px solid #ff8800;
+  text-align: right;
+}
+
+.error-msg {
+  background: #ffe0e0;
+  border-left: 4px solid #ff0000;
+  color: #990000;
+}
+
+.chat-form {
+  display: flex;
+  border-top: 2px solid #808080;
+  background: #c0c0c0;
+  padding: 6px;
+}
+
+.chat-form input {
+  flex: 1;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  padding: 4px;
+  border: 2px inset #808080;
+}
+
+.chat-form button {
+  margin-left: 6px;
+  font-family: "Comic Sans MS", cursive;
+  font-weight: bold;
+  background: #ffff00;
+  border: 2px outset #808080;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+
+.chat-form button:active {
+  border: 2px inset #808080;
+}
+
+.status-line {
+  font-size: 11px;
+  color: #006600;
+  background: #c0c0c0;
+  padding: 3px 8px;
+  border-top: 1px solid #808080;
+}
+
+.footer-cell {
+  text-align: center;
+  font-size: 12px;
+  background: #c0c0c0;
+  padding: 10px;
+}
+
+/* =========================================================
+   2030 TEMASI - "Modernlestir" butonuna basildiginda
+   body'e eklenen .theme-future sinifi buradan devreye girer
+   ========================================================= */
+
+@keyframes hologram-drift {
+  0%   { background-position: 0% 0%, 0% 0%, 0 0; }
+  100% { background-position: 100% 100%, -100% 50%, 0 40px; }
+}
+
+@keyframes hologram-text-shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 18px rgba(124, 92, 255, 0.35), 0 0 0 rgba(22, 217, 217, 0); }
+  50%      { box-shadow: 0 0 36px rgba(124, 92, 255, 0.65), 0 0 22px rgba(22, 217, 217, 0.35); }
+}
+
+@keyframes badge-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.55; }
+}
+
+body.theme-future {
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.025) 0px, rgba(255, 255, 255, 0.025) 1px, transparent 1px, transparent 3px),
+    radial-gradient(circle at 15% 10%, rgba(124, 92, 255, 0.35) 0%, transparent 45%),
+    radial-gradient(circle at 85% 30%, rgba(22, 217, 217, 0.28) 0%, transparent 45%),
+    radial-gradient(circle at 20% 0%, #1b1033 0%, #05060f 55%, #05060f 100%);
+  background-attachment: fixed;
+  background-size: auto, 200% 200%, 200% 200%, auto;
+  animation: hologram-drift 18s ease-in-out infinite alternate;
+  font-family: "Segoe UI", "Inter", system-ui, -apple-system, sans-serif;
+  color: #e8e6ff;
+}
+
+/* 90'lara ozgu ogeleri gizle */
+body.theme-future .top-marquee,
+body.theme-future #webring-box {
+  display: none;
+}
+
+/* "Yapim asamasinda" rozeti -> holografik durum rozetine donusuyor */
+body.theme-future .under-construction {
+  display: inline-block;
+  background: rgba(22, 217, 217, 0.12);
+  color: #6ff5f5;
+  border: 1px solid rgba(22, 217, 217, 0.55);
+  border-radius: 999px;
+  animation: badge-pulse 1.6s ease-in-out infinite;
+  text-shadow: 0 0 8px rgba(111, 245, 245, 0.8);
+}
+
+body.theme-future .mode-toggle-bar {
+  background: rgba(10, 8, 25, 0.85);
+  border-bottom: 1px solid rgba(140, 120, 255, 0.35);
+  backdrop-filter: blur(6px);
+}
+
+body.theme-future .modernize-btn {
+  background: linear-gradient(135deg, #7c5cff, #16d9d9);
+  color: #05060f;
+  border: none;
+  border-radius: 999px;
+  animation: glow-pulse 2.4s ease-in-out infinite;
+}
+
+body.theme-future .page-frame {
+  width: min(920px, 94vw);
+  background: rgba(20, 18, 40, 0.72);
+  border: 1px solid rgba(140, 120, 255, 0.35);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(124, 92, 255, 0.25);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  animation: glow-pulse 4s ease-in-out infinite;
+}
+
+body.theme-future .header-cell {
+  background: linear-gradient(120deg, #241a4d, #0f2a3d);
+  border-bottom: 1px solid rgba(140, 120, 255, 0.25);
+  padding: 28px 20px;
+}
+
+body.theme-future .blink-title {
+  color: transparent;
+  background: linear-gradient(90deg, #9d7bff, #16d9d9, #ff7bd8, #9d7bff);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: none;
+  font-size: 32px;
+  letter-spacing: 0.5px;
+  animation: hologram-text-shimmer 3s ease-in-out infinite;
+}
+
+body.theme-future .subtitle {
+  color: #a9a3d6;
+  font-style: normal;
+}
+
+body.theme-future .body-cell {
+  background: transparent;
+  padding: 16px;
+}
+
+/* Ana govdeyi (tablo) VR'da yuzen iki ayri "spatial panel" gibi
+   gostermek icin flex'e ceviriyoruz: dar bir ikon rayi + genis sohbet
+   camı. Silikon Vadisi 2030 hissi: hicbir metin zorla gosterilmiyor,
+   sadece ikonlar - uzerine gelince (veya dokununca) aciliyor. */
+body.theme-future .layout-table {
+  display: block;
+  background: transparent;
+  border: none;
+}
+
+body.theme-future .layout-table tbody,
+body.theme-future .layout-table tr {
+  display: flex;
+  align-items: stretch;
+  gap: 14px;
+}
+
+body.theme-future .sidebar {
+  display: block;
+  width: 60px;
+  flex: 0 0 auto;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(140, 120, 255, 0.22);
+  border-radius: 18px;
+  margin: 4px 0;
+  padding: 4px;
+  overflow: hidden;
+  transition: width 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.28s ease;
+  backdrop-filter: blur(8px);
+}
+
+body.theme-future .sidebar:hover,
+body.theme-future .sidebar:focus-within {
+  width: 190px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+body.theme-future .sidebar-box {
+  padding: 10px 6px;
+}
+
+body.theme-future .sidebar-box h3 {
+  color: #16d9d9;
+  border-bottom: none;
+  font-weight: 600;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+  height: 0;
+  margin: 0 0 6px 2px;
+}
+
+body.theme-future .sidebar:hover .sidebar-box h3 {
+  opacity: 0.75;
+  height: auto;
+}
+
+body.theme-future .sidebar-box ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+body.theme-future .sidebar-box ul li {
+  padding: 0 0 6px 0;
+}
+
+body.theme-future .nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #d6d3ff;
+  text-decoration: none;
+  padding: 9px 9px;
+  border-radius: 12px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+body.theme-future .nav-item:hover {
+  background: rgba(124, 92, 255, 0.22);
+  color: #ffffff;
+}
+
+body.theme-future .nav-icon {
+  font-size: 18px;
+  width: 22px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+body.theme-future .nav-text {
+  white-space: nowrap;
+  font-size: 13px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+body.theme-future .sidebar:hover .nav-text {
+  opacity: 1;
+}
+
+body.theme-future .sidebar-box hr {
+  border: none;
+  border-top: 1px solid rgba(140, 120, 255, 0.2);
+  margin: 6px 0;
+}
+
+body.theme-future .webring,
+body.theme-future .visitor-counter {
+  color: #a9a3d6;
+}
+
+body.theme-future #counter-label {
+  display: block;
+  font-size: 10px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  margin-bottom: 4px;
+}
+
+body.theme-future .sidebar:hover #counter-label {
+  opacity: 0.8;
+}
+
+body.theme-future .visitor-counter {
+  text-align: center;
+}
+
+body.theme-future #counter {
+  display: inline-block;
+  background: rgba(22, 217, 217, 0.12);
+  color: #16d9d9;
+  border: 1px solid rgba(22, 217, 217, 0.55);
+  border-radius: 6px;
+  font-size: 10px;
+  padding: 3px 5px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px rgba(22, 217, 217, 0.8);
+  animation: badge-pulse 2s ease-in-out infinite;
+}
+
+body.theme-future .main-content {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+  background: transparent;
+}
+
+body.theme-future .chat-window {
+  border: 1px solid rgba(140, 120, 255, 0.35);
+  border-radius: 14px;
+  background: rgba(10, 9, 22, 0.55);
+  overflow: hidden;
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+body.theme-future .chat-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  color: #e8e6ff;
+  font-weight: 600;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(140, 120, 255, 0.2);
+  padding: 14px 16px;
+}
+
+body.theme-future .chat-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c5cff, #16d9d9);
+  font-size: 15px;
+  animation: glow-pulse 2.4s ease-in-out infinite;
+}
+
+body.theme-future .chat-status-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-left: auto;
+  border-radius: 50%;
+  background: #3cf07a;
+  box-shadow: 0 0 8px #3cf07a, 0 0 2px #3cf07a;
+}
+
+body.theme-future .chat-status-dot::after {
+  content: "cevrimici";
+  margin-left: 14px;
+  font-size: 11px;
+  font-weight: 400;
+  color: #7ee0c9;
+  white-space: nowrap;
+}
+
+body.theme-future .chat-log {
+  background: transparent;
+  color: #e8e6ff;
+  font-family: "Segoe UI", "Inter", system-ui, sans-serif;
+  height: 360px;
+}
+
+body.theme-future .msg {
+  border: none;
+  border-radius: 16px;
+  max-width: 78%;
+  padding: 10px 14px;
+}
+
+body.theme-future .msg b {
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  opacity: 0.55;
+  margin-bottom: 3px;
+}
+
+body.theme-future .bot-msg {
+  background: rgba(124, 92, 255, 0.18);
+  border-left: none;
+  margin-right: auto;
+}
+
+body.theme-future .user-msg {
+  background: rgba(22, 217, 217, 0.16);
+  border-left: none;
+  margin-left: auto;
+  text-align: left;
+}
+
+body.theme-future .error-msg {
+  background: rgba(255, 90, 90, 0.15);
+  border-left: none;
+  color: #ff9b9b;
+  margin-right: auto;
+}
+
+body.theme-future .chat-form {
+  background: rgba(255, 255, 255, 0.03);
+  border-top: 1px solid rgba(140, 120, 255, 0.2);
+  padding: 10px;
+}
+
+body.theme-future .chat-form input {
+  font-family: inherit;
+  background: rgba(255, 255, 255, 0.06);
+  color: #e8e6ff;
+  border: 1px solid rgba(140, 120, 255, 0.3);
+  border-radius: 999px;
+  padding: 8px 14px;
+}
+
+body.theme-future .chat-form input::placeholder {
+  color: #8b86b8;
+}
+
+body.theme-future .chat-form button {
+  font-family: "Segoe UI", "Inter", system-ui, sans-serif;
+  background: linear-gradient(120deg, #7c5cff, #16d9d9);
+  color: #05060f;
+  border: none;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+body.theme-future .chat-form button:hover {
+  box-shadow: 0 0 20px rgba(124, 92, 255, 0.7);
+  transform: translateY(-1px);
+}
+
+body.theme-future .bot-msg {
+  box-shadow: -3px 0 0 0 #7c5cff inset;
+}
+
+body.theme-future .user-msg {
+  box-shadow: 3px 0 0 0 #16d9d9 inset;
+}
+
+body.theme-future .status-line {
+  background: transparent;
+  color: #7ee0c9;
+  border-top: none;
+}
+
+body.theme-future .footer-cell {
+  background: transparent;
+  color: #8b86b8;
+  border-top: 1px solid rgba(140, 120, 255, 0.15);
+}
+
+body.theme-future .footer-cell hr {
+  border: none;
+  border-top: 1px solid rgba(140, 120, 255, 0.15);
+}
