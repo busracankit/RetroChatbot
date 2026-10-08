@@ -1,4 +1,4 @@
-/* RetroBot 95 - 1990'lar tarzi web sitesi */
+/* RetroBot 95 - 1990s-style website */
 
 body {
   margin: 0;
@@ -11,7 +11,7 @@ body {
   transition: background-color 0.4s ease;
 }
 
-/* --- Zaman makinesi / mod degistirme cubugu (her iki temada da gorunur) --- */
+/* --- Time machine / mode-switch bar (visible in both themes) --- */
 
 .mode-toggle-bar {
   position: sticky;
@@ -252,8 +252,8 @@ body {
 }
 
 /* =========================================================
-   2030 TEMASI - "Modernlestir" butonuna basildiginda
-   body'e eklenen .theme-future sinifi buradan devreye girer
+   2030 THEME - activated when the .theme-future class is
+   added to body via the "Modernize" button
    ========================================================= */
 
 @keyframes hologram-drift {
@@ -289,13 +289,13 @@ body.theme-future {
   color: #e8e6ff;
 }
 
-/* 90'lara ozgu ogeleri gizle */
+/* Hide elements specific to the 90s theme */
 body.theme-future .top-marquee,
 body.theme-future #webring-box {
   display: none;
 }
 
-/* "Yapim asamasinda" rozeti -> holografik durum rozetine donusuyor */
+/* "Under construction" badge -> turns into a holographic status badge */
 body.theme-future .under-construction {
   display: inline-block;
   background: rgba(22, 217, 217, 0.12);
@@ -359,10 +359,10 @@ body.theme-future .body-cell {
   padding: 16px;
 }
 
-/* Ana govdeyi (tablo) VR'da yuzen iki ayri "spatial panel" gibi
-   gostermek icin flex'e ceviriyoruz: dar bir ikon rayi + genis sohbet
-   camı. Silikon Vadisi 2030 hissi: hicbir metin zorla gosterilmiyor,
-   sadece ikonlar - uzerine gelince (veya dokununca) aciliyor. */
+/* We convert the main body (table) to flex to show it as two separate
+   floating "spatial panels" in VR: a narrow icon rail + a wide chat
+   window. Silicon Valley 2030 feel: no text is shown by default,
+   just icons - they open on hover (or tap). */
 body.theme-future .layout-table {
   display: block;
   background: transparent;

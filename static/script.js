@@ -1,4 +1,4 @@
-// RetroBot 95 / NovaBot 2030 - frontend mantigi
+// RetroBot 95 / NovaBot 2030 - frontend logic
 
 const chatLog = document.getElementById("chat-log");
 const chatForm = document.getElementById("chat-form");
@@ -10,10 +10,10 @@ const modeToggleLabel = document.querySelector(".mode-toggle-label");
 const sendBtn = document.getElementById("send-btn");
 const chatAvatar = document.getElementById("chat-avatar");
 
-// Onceki Gemini interaction'inin id'si (sohbetin devami icin)
+// The id of the previous Gemini interaction (for conversation continuity)
 let previousInteractionId = null;
 
-// "retro" (1990'lar) veya "future" (2030'lar)
+// "retro" (1990s) or "future" (2030s)
 let mode = "retro";
 
 const BOT_NAME = {
@@ -21,7 +21,7 @@ const BOT_NAME = {
   future: "NovaBot",
 };
 
-// Moda gore degisen metinler
+// Texts that change depending on the mode
 const THEME_TEXT = {
   retro: {
     docTitle: "~*~ RetroBot 95 ~*~ Kisisel Bilgisayar Asistaniniz ~*~",
@@ -129,7 +129,7 @@ chatForm.addEventListener("submit", (e) => {
   sendMessage(message);
 });
 
-// Retro "ziyaretci sayaci" - localStorage ile sahte ama eglenceli sayac
+// Retro "visitor counter" - a fake but fun counter using localStorage
 (function initCounter() {
   const key = "retrobot_visit_count";
   let count = parseInt(localStorage.getItem(key) || "133742", 10);
@@ -161,7 +161,7 @@ function applyTheme(newMode) {
   sendBtn.textContent = t.sendBtnLabel;
   chatAvatar.textContent = t.avatar;
 
-  // Mod degisince sohbeti sifirla (yeni persona, yeni interaction)
+  // Reset the chat when the mode changes (new persona, new interaction)
   previousInteractionId = null;
   chatLog.innerHTML = "";
   appendMessage(t.welcome, "bot-msg", BOT_NAME[mode]);
@@ -171,5 +171,5 @@ modernizeBtn.addEventListener("click", () => {
   applyTheme(mode === "retro" ? "future" : "retro");
 });
 
-// Baslangicta tum metinleri THEME_TEXT ile senkronize et (tek kaynak).
+// Sync all texts with THEME_TEXT on startup (single source of truth).
 applyTheme("retro");

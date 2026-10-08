@@ -1,16 +1,16 @@
 """
 RetroChatbot - FastAPI backend
 
-Kendini 1990'larda sanan bir sohbet botu. Kullanıcının mesajlarını
-Gemini'nin Interactions API'sine 1990'lar personasını tanımlayan bir
-system prompt ile birlikte gönderir ve cevabı frontend'e döner.
+A chatbot that thinks it's living in the 1990s. Forwards the user's
+messages to Gemini's Interactions API together with a system prompt
+that defines the 1990s persona, and returns the reply to the frontend.
 
-NOT: Google, AI Studio'da artık yeni API key'leri "AQ." on-ekiyle
-üretiyor (eski format "AIzaSy..." idi). Bu yeni "auth key" formatı,
-eski `generate_content` REST çağrısında bazı hesaplarda "API key not
-valid" hatasına yol açabiliyor; Google'ın kendi dokümantasyonu bu yeni
-key'ler için `client.interactions.create(...)` akışını gösteriyor, o
-yüzden burada onu kullanıyoruz.
+NOTE: Google AI Studio now issues new API keys with an "AQ." prefix
+(the old format was "AIzaSy..."). This new "auth key" format can
+trigger "API key not valid" errors on some accounts with the older
+`generate_content` REST flow; Google's own documentation points to the
+`client.interactions.create(...)` flow for these new keys, so that's
+what we use here.
 """
 
 import os
@@ -24,9 +24,9 @@ from google import genai
 load_dotenv()
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-# NOT: Interactions API su an Gemini 3 ailesinde calisiyor. .env icindeki
-# GEMINI_MODEL degerini gemini-3-flash-preview (veya daha yenisi) olarak
-# ayarlamayi unutma. Guncel liste: https://ai.google.dev/gemini-api/docs/models
+# NOTE: The Interactions API currently runs on the Gemini 3 family. Make
+# sure to set GEMINI_MODEL in .env to gemini-3-flash-preview (or a newer
+# one). Current list: https://ai.google.dev/gemini-api/docs/models
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3-flash-preview")
 
 SYSTEM_PROMPT_RETRO = """\
@@ -111,9 +111,9 @@ def get_client() -> genai.Client:
 
 
 def extract_reply_text(response) -> str:
-    """Interactions API'nin surumune gore cevap metnini farkli
-    alanlardan cikarmayi dener (SDK/uctan uca API henuz cok yeni
-    oldugu icin tam alan adi zamanla degisebiliyor)."""
+    """Tries to extract the reply text from different fields depending on
+    the Interactions API version (the exact field name can still change
+    over time since the SDK/API is very new)."""
     for attr in ("output_text", "model_output", "text"):
         value = getattr(response, attr, None)
         if value:
@@ -137,7 +137,7 @@ def extract_reply_text(response) -> str:
 class ChatRequest(BaseModel):
     message: str
     previous_interaction_id: str | None = None
-    mode: str = "retro"  # "retro" (1990'lar) | "future" (2030'lar)
+    mode: str = "retro"  # "retro" (1990s) | "future" (2030s)
 
 
 class ChatResponse(BaseModel):
@@ -164,7 +164,7 @@ def chat(req: ChatRequest) -> ChatResponse:
 
     try:
         response = client.interactions.create(**kwargs)
-    except Exception as exc:  # noqa: BLE001 - egitim projesi, basit hata iletimi
+    except Exception as exc:  # noqa: BLE001 - educational project, simple error propagation
         raise HTTPException(status_code=502, detail=f"Gemini istegi basarisiz: {exc}")
 
     text = extract_reply_text(response).strip()
@@ -174,5 +174,5 @@ def chat(req: ChatRequest) -> ChatResponse:
     return ChatResponse(reply=text, interaction_id=getattr(response, "id", None))
 
 
-# Frontend'i (static/) ayni sunucudan servis et.
+# Serve the frontend (static/) from the same server.
 app.mount("/", StaticFiles(directory="static", html=True), name="static")
