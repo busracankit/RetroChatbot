@@ -1,93 +1,92 @@
-# RetroBot 95 — 1990'lardan Kalma Chatbot (artık 2030'a da ışınlanabiliyor)
+# RetroBot 95 — A Chatbot Stuck in the 1990s (that can also jump to 2030)
 
-Kendini 1990'larda sanan bir sohbet botu. Python + FastAPI backend, Google
-Gemini'nin Interactions API'si ile konuşuyor; frontend düz HTML/CSS/JS ve
-dönemin web sitelerini andırıyor. Üstteki "Modernleştir" butonuyla hem bot
-hem arayüz 2030'un (VR/holografik tarzda tasarlanmış) bir versiyonuna
-dönüşüyor.
+A chatbot that thinks it's still living in the 1990s. Python + FastAPI
+backend, talking to Google Gemini's Interactions API; a plain HTML/CSS/JS
+frontend styled like a website from that era. A "Modernize" button at the
+top switches both the bot's persona and the UI into a 2030 version (VR /
+holographic-inspired design).
 
-## Özellikler
+## Features
 
-- **İki persona:** varsayılan "RetroBot" (1990'lar, 2000 sonrasından
-  habersiz) ve "NovaBot" (2030, nöro-implant/holografik/uçan-taksi
-  temalı, abartılı bir gelecek karakteri).
-- **İki tema:** retro (marquee, "yapım aşamasında" rozeti, table layout)
-  ve future (camsı/holografik paneller, ikon-rayı navigasyon, neon
-  parlamalar).
-- Gemini ile konuşma sürekliliği sunucu tarafında `previous_interaction_id`
-  üzerinden sağlanıyor.
+- **Two personas:** the default "RetroBot" (1990s, has no idea what
+  happened after 2000) and "NovaBot" (2030, unlocked via the "Modernize"
+  button — neuro-implants, holograms, flying taxis, and other over-the-top
+  future tech).
+- **Two themes:** retro (marquee, "under construction" badge, table
+  layout) and future (glassy/holographic panels, icon-rail navigation,
+  neon glow effects).
+- Conversation continuity with Gemini is handled server-side via
+  `previous_interaction_id`.
 
-## Kurulum
+## Setup
 
-1. Sanal ortamı aktive et (PyCharm zaten `.venv` oluşturmuş, terminalde de
-   aktive edebilirsin):
+1. Activate the virtual environment (PyCharm already created `.venv`; you
+   can also activate it from a terminal):
 
    ```bash
    source .venv/bin/activate      # macOS / Linux
    ```
 
-2. Bağımlılıkları kur:
+2. Install dependencies:
 
    ```bash
    pip install -r requirements.txt
    ```
 
-3. `.env.example` dosyasını `.env` olarak kopyala ve kendi Gemini API
-   key'ini gir:
+3. Copy `.env.example` to `.env` and add your own Gemini API key:
 
    ```bash
    cp .env.example .env
    ```
 
-   `.env` içine:
+   Inside `.env`:
 
    ```
-   GEMINI_API_KEY=senin_api_keyin
+   GEMINI_API_KEY=your_api_key
    GEMINI_MODEL=gemini-3-flash-preview
    ```
 
-   Not: Google AI Studio artık `AQ.` ön ekli yeni nesil "auth key"ler
-   üretiyor. Bu proje Gemini'nin Interactions API'sini kullandığı için bu
-   yeni key formatıyla uyumlu; `gemini-3-flash-preview` (veya daha
-   yenisi) Interactions API'yi destekleyen bir model olmalı.
+   Note: Google AI Studio now issues newer-generation API keys prefixed
+   with `AQ.`. This project uses Gemini's Interactions API, which is
+   compatible with that new key format; `gemini-3-flash-preview` (or a
+   newer model) must be one that supports the Interactions API.
 
-## Çalıştırma
+## Running
 
 ```bash
 python -m uvicorn main:app --reload
 ```
 
-(`python -m uvicorn ...` kullanmak, venv aktifken global bir uvicorn
-kurulumuyla karışmasını önlüyor.)
+(Using `python -m uvicorn ...` while the venv is active avoids clashing
+with any globally installed uvicorn.)
 
-Sonra tarayıcıda aç: http://127.0.0.1:8000
+Then open in your browser: http://127.0.0.1:8000
 
-## Yapı
+## Project structure
 
 ```
 RetroChatbotProject/
-  main.py            # FastAPI backend + Gemini Interactions API entegrasyonu (/api/chat)
-                      #   - SYSTEM_PROMPT_RETRO / SYSTEM_PROMPT_FUTURE iki persona
+  main.py            # FastAPI backend + Gemini Interactions API integration (/api/chat)
+                      #   - SYSTEM_PROMPT_RETRO / SYSTEM_PROMPT_FUTURE: the two personas
                       #   - ChatRequest.mode: "retro" | "future"
   requirements.txt
-  .env.example        # placeholder - gercek key asla buraya girilmemeli
+  .env.example        # placeholder only - never put a real key here
   .gitignore           # .venv, __pycache__, .env
   static/
-    index.html       # Retro arayüz + "Modernleştir" butonu, ikon+metin nav yapısı
-    style.css         # Retro tema + body.theme-future altında 2030 tema override'ları
-    script.js         # fetch ile /api/chat çağrısı, previous_interaction_id ile süreklilik,
-                       #   THEME_TEXT sözlüğü ile mod değişince tüm metinleri/temayı günceller
+    index.html       # Retro UI + "Modernize" button, icon+text nav structure
+    style.css         # Retro theme + 2030 theme overrides under body.theme-future
+    script.js         # calls /api/chat via fetch, continuity via previous_interaction_id,
+                       #   THEME_TEXT dictionary updates all text/theme on mode switch
   README.md
 ```
 
-## Notlar
+## Notes
 
-- `main.py` içindeki `SYSTEM_PROMPT_RETRO` / `SYSTEM_PROMPT_FUTURE`,
-  botun iki personasını tanımlıyor; ton/karakter ince ayarları buradan
-  yapılır.
-- `GEMINI_MODEL` değeri `.env` içinden değiştirilebilir; Google'ın güncel
-  model listesi için https://ai.google.dev/gemini-api/docs/models
-  adresine bak.
-- `.env` dosyası `.gitignore` ile korunuyor; gerçek API key'in asla
-  repoya girmediğinden emin ol (`.env.example` sadece placeholder
-  içermeli).
+- `SYSTEM_PROMPT_RETRO` / `SYSTEM_PROMPT_FUTURE` in `main.py` define the
+  bot's two personas; tweak the tone/character there.
+- `GEMINI_MODEL` can be changed in `.env`; see
+  https://ai.google.dev/gemini-api/docs/models for Google's current model
+  list.
+- `.env` is protected by `.gitignore`; make sure your real API key never
+  ends up in the repo (`.env.example` should only ever contain a
+  placeholder).
