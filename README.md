@@ -18,6 +18,12 @@ holographic-inspired design).
 - Conversation continuity with Gemini is handled server-side via
   `previous_interaction_id`.
 
+## Screenshots
+
+| Retro mode (1990s) | Future mode (2030) |
+|---|---|
+| ![RetroBot 95 - retro mode](screenshots/retro-mode.png) | ![NovaBot 2030 - future mode](screenshots/future-mode.png) |
+
 ## Setup
 
 1. Activate the virtual environment (PyCharm already created `.venv`; you
